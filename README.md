@@ -56,22 +56,22 @@ export B2_ACCOUNT_KEY=$YOUR_KEY_HERE
 # nextcloud-pgsql is just the name of my bucket, but you can use anything
 restic -r b2:nextcloud-pgsql:default init
 ```
-Then it should ask you for a password and you need to keep track of that, for your `backup.yaml` that we'll be configuring below.
+Then it should ask you for a password and you need to keep track of that, for your `schedule.yaml` that we'll be configuring below.
 
 You'll want to also make sure you have a k8s secret for that restic repo password you created, so let's get that done now:
 ```bash
-# restic-repo is just the name I used in my `backup.yaml`, can be anything as long as both match in secret and backup resource
-kubectl create secret generic restic-repo --from-literal=password=$YOUR_PASSWORD_HERE --namespace k8up
+# restic-repo is just the name I used in my `schedule.yaml`, can be anything as long as both match in secret and backup resource
+kubectl create secret generic restic-backup-repo --from-literal=password=$YOUR_PASSWORD_HERE --namespace k8up
 ```
 
 # backup to backblaze b2
-Create a secret with your application id and application key like. `b2-credentials-pgsql` is just the name I used for my k8s secret in my `backup.yaml`, can be anything as long as both match in secret and backup resource
+Create a secret with your application id and application key like. `b2-credentials-pgsql` is just the name I used for my k8s secret in my `schedule.yaml`, can be anything as long as both match in secret and backup resource
 ```bash
 kubectl create secret generic b2-credentials-pgsql --from-literal=application-key-id=$YOUR_KEY_ID_HERE --from-literal=application-key=$YOUR_KEY_HERE --namespace k8up
 ```
 
-Create the aforementioned `backup.yaml`. You can find a further explanation how to do this with minio in the [k8up docs](https://k8up.io/k8up/2.3/how-tos/backup.html).
+Create the aforementioned `schedule.yaml`. You can find a further explanation how to do this with minio in the [k8up docs](https://k8up.io/k8up/2.3/how-tos/backup.html).
 ```bash
-# create the backup resource
-k apply -f charts/k8up/backup.yaml
+# create the backup `schedule` resource
+k apply -f charts/k8up/schedule.yaml
 ```

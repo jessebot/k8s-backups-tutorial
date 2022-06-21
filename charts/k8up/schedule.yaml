@@ -1,0 +1,37 @@
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: backup-nextcloud-b2
+spec:
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  backend:
+    repoPasswordSecretRef:
+      name: restic-backup-repo
+      key: password
+    s3:
+      endpoint: s3.eu-central-003.backblazeb2.com 
+      bucket: nextcloud-pgsql
+      accessKeyIDSecretRef:
+        name: b2-credentials-pgsql
+        key: application-key-id
+      secretAccessKeySecretRef:
+        name: b2-credentials-pgsql
+        key: application-key
+  backup:
+    # daily at midnight
+    schedule: '0 0 * * *'
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 2
+    # optional
+    #promURL: https://prometheus-io-instance:8443
+  check:
+    schedule: '0 1 * * 1'
+    # optional
+    #promURL: https://prometheus-io-instance:8443
+  prune:
+    # monthly
+    schedule: '0 1 * * 0'
+    retention:
+      keepLast: 5
+      keepDaily: 14
