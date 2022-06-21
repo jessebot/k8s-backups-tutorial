@@ -1,7 +1,7 @@
 # Backups of k8s stateful apps
 Instructions specific to MacOS and KIND for getting your backups up and running for persistent data, with nextcloud postgres as the example we're backing up.
 
--Currently, bitnami is the standard location to get a postgresql helm chart, and their docs say to use VmWare Tanzu's Velero, so that's what we're using. Thier tutorial is [here](https://docs.bitnami.com/tutorials/migrate-data-bitnami-velero/).-
+<strike>Currently, bitnami is the standard location to get a postgresql helm chart, and their docs say to use VmWare Tanzu's Velero, so that's what we're using. Their tutorial is [here](https://docs.bitnami.com/tutorials/migrate-data-bitnami-velero/).</strike>
 
 I was gonna use velero, then I read a bunch of forum posts saying it was [slower](https://www.reddit.com/r/kubernetes/comments/u1uqip/comment/i4fflnc/?utm_source=share&utm_medium=web2x&context=3) and often incompatible with alternative block storage stuff, and since I want ot backup to backblaze b2, that leaves me in a bit of a pickle, until I found [k8up](https://github.com/k8up-io/getting-started). I'm so sorry you have to memorize another 3-4 letter k8s app... I hate this too.
 
