@@ -1,0 +1,19 @@
+apiVersion: k8up.io/v1
+kind: Backup
+metadata:
+  name: backup-nextcloud-b2
+spec:
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  backend:
+    repoPasswordSecretRef:
+      name: restic-backup-repo
+      key: password
+    b2:
+      bucket: nextcloud-pgsql
+      accountIDSecretRef:
+        name: b2-credentials-pgsql
+        key: application-key-id
+      accountKeySecretRef:
+        name: b2-credentials-pgsql
+        key: application-key
