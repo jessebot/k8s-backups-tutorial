@@ -9,7 +9,7 @@ spec:
     repoPasswordSecretRef:
       name: restic-backup-repo
       key: password
-    s3:
+    b2:
       endpoint: s3.eu-central-003.backblazeb2.com 
       bucket: nextcloud-pgsql
       accessKeyIDSecretRef:
