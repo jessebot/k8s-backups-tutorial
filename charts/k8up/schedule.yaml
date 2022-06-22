@@ -10,12 +10,11 @@ spec:
       name: restic-backup-repo
       key: password
     b2:
-      endpoint: s3.eu-central-003.backblazeb2.com 
       bucket: nextcloud-pgsql
-      accessKeyIDSecretRef:
+      accountIDSecretRef:
         name: b2-credentials-pgsql
         key: application-key-id
-      secretAccessKeySecretRef:
+      accountKeySecretRef:
         name: b2-credentials-pgsql
         key: application-key
   backup:
