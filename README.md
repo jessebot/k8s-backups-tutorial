@@ -39,36 +39,13 @@ helm dep update helm/
 git commit -m "updating helm chart: reason for updating" helm
 ```
 
-# Run restic
-
-### Install Restic
-If you haven't already, on a mac run:
-```bash
-# installation
-brew install restic
-```
-[Read more for here other distros](https://restic.readthedocs.io/en/latest/020_installation.html):
-
-
-## Initialize Restic Repo
-Then you'll need to initialize a restic repo stored at backblaze.
-*Note: restic can automatically create the bucket if it doesn't exist, but only if the application key you provided can create buckets*
-```bash
-# export your variables for the bucket auth
-export B2_ACCOUNT_ID=$YOUR_KEY_ID_HERE
-export B2_ACCOUNT_KEY=$YOUR_KEY_HERE
-
-# nextcloud-pgsql is just the name of my bucket, but you can use anything
-restic -r b2:nextcloud-pgsql:default init
-```
-Then it should ask you for a password and you need to keep track of that, for your `schedule.yaml` that we'll be configuring below.
-
 ## B2 and Restic K8s Secrets
-You'll want to also make sure you have a k8s secret for that restic repo password you created, so let's get that done now:
+You'll want to also make sure you create a k8s secret for the restic repo password you created, so let's get that done now:
 ```bash
 # restic-repo is just the name I used in my `schedule.yaml`, can be anything as long as both match in secret and backup resource
  kubectl create secret generic restic-backup-repo --from-literal=password=$YOUR_PASSWORD_HERE --namespace k8up
 ```
+*tip*: if you put a space before the command, bash won't save it in history
 
 Create a secret with your application id and application key like. `b2-credentials-pgsql` is just the name I used for my k8s secret in my `schedule.yaml`, can be anything as long as both match in secret and backup resource
 ```bash
@@ -119,8 +96,15 @@ postgresql:
       enabled: true
 ```
 
+### Create a one time backup to b2
+```bash
+# create the backup `schedule` resource
+k apply -f backup-yamls/backup.yaml
+```
+
+### Create a scheduled backup to b2
 Create the aforementioned `schedule.yaml`. You can find a further explanation how to do this with minio in the [k8up docs](https://k8up.io/k8up/2.3/how-tos/backup.html).
 ```bash
 # create the backup `schedule` resource
-k apply -f charts/k8up/schedule.yaml
+k apply -f backup-yamls/schedule.yaml
 ```
