@@ -95,10 +95,28 @@ postgresql:
 ```
 
 ### Create a one time backup to b2
-Make sure the bucket parameters in `backup.yaml`/`schedule.yaml` are set to your bucket. I've left `nextcloud` here as an example:
+Grab the [`backup.yaml`](https://raw.githubusercontent.com/jessebot/k8s-backups-tutorial/main/backup-yamls/backup.yaml) from the `backup-yamls` directory in this repo. Make sure the bucket parameters in `backup.yaml` (and `schedule.yaml`, if you use it) are set to your b2 bucket. I've left `nextcloud` here as an example:
 ```yaml
+apiVersion: k8up.io/v1
+kind: Backup
+metadata:
+  name: backup-nextcloud-b2
+  namespace: nextcloud
+spec:
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  backend:
+    repoPasswordSecretRef:
+      name: k8up-restic-b2-repo-pw
+      key: password
     b2:
-      bucket: nextcloud
+      bucket: nextcloud-pgsql
+      accountIDSecretRef:
+        name: k8up-restic-b2-creds-nextcloud-pg
+        key: application-key-id
+      accountKeySecretRef:
+        name: k8up-restic-b2-creds-nextcloud-pg
+        key: application-key
 ```
 
 ```bash
