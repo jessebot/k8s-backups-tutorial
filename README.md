@@ -134,5 +134,6 @@ k apply -f backup-yamls/schedule.yaml
 ```
 
 # We are here
-Sorry folks, I have no idea why this is still broken, or if I'm just bad at my job :) (I'm often bad at my job)
+Sorry folks, I have no idea what I did wrong :) (I'm often bad at my job)
+
 [k8up issue #690](https://github.com/k8up-io/k8up/issues/690)
