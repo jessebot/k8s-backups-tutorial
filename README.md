@@ -114,6 +114,12 @@ postgresql:
 ```
 
 ### Create a one time backup to b2
+Make sure the bucket parameters in `backup.yaml`/`schedule.yaml` are set to your bucket. I've left `nextcloud` here as an example:
+```yaml
+    b2:
+      bucket: nextcloud
+```
+
 ```bash
 # create the backup `schedule` resource
 k apply -f backup-yamls/backup.yaml
