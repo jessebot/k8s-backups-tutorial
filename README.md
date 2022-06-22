@@ -11,7 +11,7 @@ I'm assuming you already have a cluster up and running and at least one namespac
 Install k8up on your cluster
 ```bash
 # Create a namespace to house it all
-kubectl create k8up
+kubectl create namespace k8up
 
 # need the CRDs
 kubectl apply -f https://github.com/k8up-io/k8up/releases/download/v2.3.0/k8up-crd.yaml --namespace k8up
