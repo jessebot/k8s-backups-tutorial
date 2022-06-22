@@ -23,27 +23,6 @@ helm repo update
 helm install k8sup-backups appuio/k8up --namespace k8up
 ```
 
-## Grab helm charts for k8s gitops
-For a local repo where you keep your `values.yaml` and `Chart.yaml` together, you'll wanna grab it from k8up's helm chart [repo](https://github.com/appuio/charts/tree/master/appuio/k8up). I used to think you did it like this, which would mean you would need to go find the git repo:
-```bash
-# Chart.yaml
-wget https://raw.githubusercontent.com/appuio/charts/master/appuio/k8up/Chart.yaml
-
-# values.yaml
-wget https://raw.githubusercontent.com/appuio/charts/master/appuio/k8up/values.yaml
-```
-But apparently there's another way.
-```bash
-TODO: put the other way
-helm
-```
-
-And then if you modify anything in `helm/*` you'll need to run:
-```bash
-helm dep update helm/
-git commit -m "updating helm chart: reason for updating" helm
-```
-
 ## Backblaze b2 bucket
 If you haven't already, create a bucket for these backups, which you can do via Backblaze's api/cli, but I did through the [Web UI](https://help.backblaze.com/hc/en-us/articles/1260803542610-Creating-a-B2-Bucket-using-the-Web-UI), and there's no shame in it. This isn't an interview.
 
