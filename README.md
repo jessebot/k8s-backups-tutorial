@@ -54,6 +54,8 @@ There's definitely cooler vault based ways to get some of this done, but my vaul
 ### Application Aware Backups
 According to the [k8up docs](https://k8up.io/k8up/2.3/how-tos/application-aware-backups.html#_postgresql), You'll need to annotate your pods you want backed up with `k8up.io/backup` and in my case, since I'm using postgres, I'd need to add this to my annotations on the pod:
 ```yaml
+metadata:
+  annotations:
       k8up.io/backupcommand: sh -c 'PGDATABASE="$POSTGRES_DB" PGUSER="$POSTGRES_USER" PGPASSWORD="$POSTGRES_PASSWORD" pg_dump --clean'
       k8up.io/file-extension: .sql
 ```
