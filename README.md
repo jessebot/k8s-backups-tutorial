@@ -87,8 +87,8 @@ postgresql:
         password: areallycoolpassword
         database: nextcloud
   primary:
-    annotations:
-      k8up.io/backupcommand: sh -c 'PGDATABASE="$POSTGRES_DB" PGUSER="$POSTGRES_USER" PGPASSWORD="$POSTGRES_PASSWORD" pg_dump --clean'
+    podAnnotations:
+      k8up.io/backupcommand: "sh -c 'PGDATABASE=\"$POSTGRES_DB\" PGUSER=\"$POSTGRES_USER\" PGPASSWORD=\"$POSTGRES_PASSWORD\" pg_dump --clean'"
       k8up.io/file-extension: .sql
     persistence:
       enabled: true
