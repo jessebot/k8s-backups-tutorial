@@ -133,6 +133,6 @@ k apply -f backup-yamls/schedule.yaml
 ```
 
 # We are here
-Sorry folks, I have no idea what I did wrong :) (I'm often bad at my job)
+Okay, we're blocked from here, but I've got an open issue here: [k8up issue #690](https://github.com/k8up-io/k8up/issues/690)
 
-[k8up issue #690](https://github.com/k8up-io/k8up/issues/690)
+And as is customary in the open source community, I'm currently working to fix the thing, or at least help fix the thing. It's a string grepping issue, so like, we'll be fine.
