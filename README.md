@@ -61,7 +61,7 @@ metadata:
 ```
 
 #### Annotate via kubectl
-You could literally do a `k edit` on this, which throws you into your default text editor, normally vi/vim, or you could knock it out entirely via the command line. For the edit, assuming nextcloud with postgres, you want something like:
+You could literally do a `kubectl edit` on this, which throws you into your default text editor, normally vi/vim, or you could knock it out entirely via the command line. For the edit, assuming nextcloud with postgres, you want something like:
 ```
 kubectl edit pod nextcloud-postgresql-0 --namespace nextcloud
 ```
@@ -121,7 +121,7 @@ spec:
 
 ```bash
 # create the backup `schedule` resource
-k apply -f backup-yamls/backup.yaml
+kubectl apply -f backup-yamls/backup.yaml
 ```
 You can find a further explanation on how to do this with minio in the [k8up docs](https://k8up.io/k8up/2.3/how-tos/backup.html).
 
@@ -129,10 +129,27 @@ You can find a further explanation on how to do this with minio in the [k8up doc
 Create the aforementioned `schedule.yaml` to backup once a day and prune monthly.
 ```bash
 # create the backup `schedule` resource
-k apply -f backup-yamls/schedule.yaml
+kubectl apply -f backup-yamls/schedule.yaml
 ```
 
-# We are here
-Okay, we're blocked from here, but I've got an open issue here: [k8up issue #690](https://github.com/k8up-io/k8up/issues/690)
+:blue-heart: Success! You should be good to go :)
 
-And as is customary in the open source community, I'm currently working to fix the thing, or at least help fix the thing. It's a string grepping issue, so like, we'll be fine.
+## Possible issues
+If you run into an issue with scheduled backups or repeat backups on b2 specifically, you may be hitting this [k8up issue #690](https://github.com/k8up-io/k8up/issues/690), for which a fix has been merged. You should be able to just change your `values.yaml` to point to the latest release, link this:
+
+```yaml
+# values.yaml
+image:
+  tag: "v2.3.3"
+
+k8up:
+  backupImage:
+    tag: "v2.3.3"
+```
+
+You can then apply that fix via helm with:
+```bash
+# NOTE: k8sup-backups is the name of *your* release that you want to upgrade
+# Can be found by doing a `helm list -A`, -A will list all namespaces
+helm upgrade k8sup-backups appuio/k8up --namespace k8up --values values.yaml
+```
